@@ -19,17 +19,16 @@ if (seat == None):
 
 print("Get slaves...")
 #slaves = seat.get_slaves(Gdk.SeatCapabilities.ALL)
-slaves = seat.get_slaves(Gdk.SeatCapabilities.NONE)
+slaves = seat.get_slaves(Gdk.SeatCapabilities.ALL_POINTING)
+#slaves = seat.get_slaves(Gdk.SeatCapabilities.NONE)
 if (slaves == None):
     print("Slaves not found!")
     exit
-    
+
 print("Found slaves (" + str(len(slaves)) + ")")
 
-#slaves = seat.get_slaves(Gdk.SeatCapabilities.ALL_POINTING)
-
-#for slave in slaves:
-#    print(slave.get_name())
+for slave in slaves:
+    print(slave.get_name())
 
 print("================================")
 
