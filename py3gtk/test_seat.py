@@ -50,3 +50,18 @@ print(pointer.get_name())
 print("================================")
 
 #Gtk.main()
+
+# MacOS output
+#Number of displays(0)
+#Get default display...
+#./test_seat.py:21: DeprecationWarning: Gdk.Display.get_device_manager is deprecated
+#  devices = display.get_device_manager().list_devices(Gdk.DeviceType.MASTER)
+#./test_seat.py:21: DeprecationWarning: Gdk.DeviceManager.list_devices is deprecated
+#  devices = display.get_device_manager().list_devices(Gdk.DeviceType.MASTER)
+#Number of devices(2)
+#Core Pointer
+#Core Keyboard
+#Get default seat...
+#Get slaves...
+#Found slaves (0)
+#Core Pointer
