@@ -4,12 +4,27 @@ gi.require_version('Gdk', '3.0')
 #from gi.repository import Gtk
 from gi.repository import Gdk
 
+Gdk.init("")
+
+displays = Gdk.DisplayManager().list_displays()
+print("Number of displays(" + str(len(displays)) + ")")
+
+
+
 #slaves = Gdk.Seat().get_slaves()
 print("Get default display...")
 display = Gdk.Display().get_default()
 if (display == None):
     print("Display not found!")
     exit
+
+devices = display.get_device_manager().list_devices(Gdk.DeviceType.MASTER)
+#devices = display.get_device_manager().list_devices(Gdk.DeviceType.SLAVE)
+#devices = display.get_device_manager().list_devices(Gdk.DeviceType.FLOATING)
+print("Number of devices(" + str(len(devices)) + ")")
+for device in devices:
+    print(device.get_name())
+
 
 print("Get default seat...")
 seat = display.get_default_seat()
@@ -26,9 +41,11 @@ if (slaves == None):
     exit
 
 print("Found slaves (" + str(len(slaves)) + ")")
-
 for slave in slaves:
     print(slave.get_name())
+    
+pointer = seat.get_pointer()
+print(pointer.get_name())
 
 print("================================")
 
