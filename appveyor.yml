@@ -36,4 +36,4 @@ deploy:
   version: testing
   publish: true
   override: true
-  explode: true
+  explode: false
