@@ -4,7 +4,7 @@
 # -------------------------------------------------------------------------------
 set -e # exit on error
 
-mkdir build
+mkdir -p build
 cd build
 cmake ../cpp -GNinja
 ninja

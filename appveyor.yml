@@ -14,7 +14,7 @@ build_script:
   - '%APPVEYOR_BUILD_FOLDER%\autobuild\msys2\appveyor.bat'
 
 artifacts:
-  - path: build/main
+  - path: build/main.exe
 
 #deploy: off
 
