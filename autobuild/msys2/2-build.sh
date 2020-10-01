@@ -4,6 +4,8 @@
 # -------------------------------------------------------------------------------
 set -e # exit on error
 
+pacman -S ${MINGW_PACKAGE_PREFIX}-lld
+
 mkdir -p build
 cd build
 cmake ../cpp -GNinja
