@@ -16,8 +16,12 @@ version: 1.0.{build}
 build_script:
   - '%APPVEYOR_BUILD_FOLDER%\autobuild\msys2\appveyor.bat'
 
+# scripts to run after build (working directory and environment changes are persisted from the previous steps)
+after_build:
+  - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\build\main.*
+
 artifacts:
-  - path: build/main.exe
+  - path: myapp.zip
 
 #deploy: off
 
@@ -29,7 +33,7 @@ deploy:
   subject: ice0
   repo: lab
   package: lab-test
-#  version: version
+  version: testing
   publish: true
   override: true
   explode: true
