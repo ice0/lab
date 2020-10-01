@@ -23,7 +23,7 @@ deploy:
   username: ice0
   api_key:
     secure: zMrTSvnYJ7yPiwkwsnvUeS/uo9L02e/jg9IKaJxOmBB/KugwyJ9o6WIF0vXHG3eq
-  subject: lab-subject
+  subject: ice0
   repo: lab
   package: lab-test
   version: 1
