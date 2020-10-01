@@ -3,7 +3,7 @@ environment:
   matrix:
     - MSYSTEM: MINGW64
     - MSYSTEM: MINGW32
-      
+
 # set clone depth
 clone_depth: 1 # clone entire repository history if not defined
 
@@ -13,4 +13,20 @@ cache:
 build_script:
   - '%APPVEYOR_BUILD_FOLDER%\autobuild\msys2\appveyor.bat'
 
-deploy: off
+artifacts:
+  - path: build/main
+
+#deploy: off
+
+deploy:
+- provider: BinTray
+  username: ice0
+  api_key:
+    secure: zMrTSvnYJ7yPiwkwsnvUeS/uo9L02e/jg9IKaJxOmBB/KugwyJ9o6WIF0vXHG3eq
+  subject: lab-subject
+  repo: lab
+  package: lab-test
+  version: 1
+  publish: true
+  override: true
+  explode: true
