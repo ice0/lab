@@ -11,6 +11,6 @@ cd %APPVEYOR_BUILD_FOLDER%
 echo %APPVEYOR_BUILD_FOLDER%
 pwd
 
-bash -c "./autobuild/msys2/1_install_requirements.sh"
-bash -c "./autobuild/msys2/2_build_mlt.sh"
-bash -c "./autobuild/msys2/3_build_synfig.sh"
+bash -c "./autobuild/msys2/2-build.sh"
+rem bash -c "./autobuild/msys2/2_build_mlt.sh"
+rem bash -c "./autobuild/msys2/3_build_synfig.sh"
