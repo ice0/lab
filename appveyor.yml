@@ -18,10 +18,10 @@ build_script:
 
 # scripts to run after build (working directory and environment changes are persisted from the previous steps)
 after_build:
-  - 7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\build\main.*
+  - 7z a myapp-{version}.zip %APPVEYOR_BUILD_FOLDER%\build\main.*
 
 artifacts:
-  - path: myapp.zip
+  - path: myapp-{version}.zip
 
 #deploy: off
 
