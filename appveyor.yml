@@ -10,6 +10,9 @@ clone_depth: 1 # clone entire repository history if not defined
 cache:
   - .ccache
 
+# version format
+version: 1.0.{build}
+
 build_script:
   - '%APPVEYOR_BUILD_FOLDER%\autobuild\msys2\appveyor.bat'
 
@@ -26,7 +29,7 @@ deploy:
   subject: ice0
   repo: lab
   package: lab-test
-  version: '1.0.{build}'
+  version: '{version}'
   publish: true
   override: true
   explode: true
