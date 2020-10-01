@@ -21,7 +21,7 @@ after_build:
   - 7z a myapp-%APPVEYOR_BUILD_VERSION%.zip %APPVEYOR_BUILD_FOLDER%\build\main.*
 
 artifacts:
-  - path: myapp-{version}.zip
+  - path: myapp-%APPVEYOR_BUILD_VERSION%.zip
 
 #deploy: off
 
