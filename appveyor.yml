@@ -29,7 +29,7 @@ deploy:
   subject: ice0
   repo: lab
   package: lab-test
-  version: version
+#  version: version
   publish: true
   override: true
   explode: true
