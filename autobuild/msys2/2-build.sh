@@ -4,7 +4,7 @@
 # -------------------------------------------------------------------------------
 set -e # exit on error
 
-pacman -S ${MINGW_PACKAGE_PREFIX}-lld
+pacman -S --needed --noconfirm --color=auto ${MINGW_PACKAGE_PREFIX}-lld
 
 mkdir -p build
 cd build
