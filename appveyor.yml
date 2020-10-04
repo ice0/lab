@@ -1,3 +1,6 @@
+# base image
+image: Visual Studio 2019
+
 environment:
   CCACHE_DIR: "%APPVEYOR_BUILD_FOLDER%\\.ccache"
   matrix:
