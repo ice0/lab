@@ -31,7 +31,7 @@ jobs:
         env:
           HOMEBREW_NO_AUTO_UPDATE: 1
           HOMEBREW_NO_ANALYTICS: 1
-        run: apt update && apt install cmake
+        run: sudo apt update && sudo apt install cmake
 
       # Runs a set of commands using the runners shell
       - name: Build (CMake)
