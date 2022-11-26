@@ -21,7 +21,11 @@ jobs:
         run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
       - name: test
-        run: cat "$GITHUB_EVENT_PATH"
+        run: |
+          echo $MERGE_MESSAGE
+          echo $PR_TITLE
+          echo "==========================="
+          cat "$GITHUB_EVENT_PATH"
 
       - name: Configure commitlint
         run: |
