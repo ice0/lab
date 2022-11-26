@@ -11,10 +11,15 @@ on:
 jobs:
   install-and-lint-pr-title:
     runs-on: ubuntu-latest
-    steps:
-#      - name: Install gh-cli and npm and conventional commit linter
-      - run: sudo apt install npm gh -y
-      - run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
-#      - name: Lint current pull request title (test)
-      - run: gh pr view --json=title --jq '.title' | npx commitlint
+    steps:
+      - name: Install gh-cli and npm and conventional commit linter
+        run: sudo apt install npm gh -y
+
+      - name: Install conventional commit linter
+        run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+      - name: Lint current pull request title (test)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr view --json=title --jq '.title' | npx commitlint
