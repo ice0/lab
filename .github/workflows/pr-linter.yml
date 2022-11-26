@@ -19,6 +19,9 @@ jobs:
       - name: Install conventional commit linter
         run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
+      - name: Checkout (required for PR request)
+        uses: actions/checkout@v3
+
       - name: Lint current pull request title (test)
         env:
           GH_TOKEN: ${{ github.token }}
