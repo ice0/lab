@@ -22,13 +22,14 @@ jobs:
         run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
       - uses: actions/checkout@v3
-      - name: Lint current pull request title (test)
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh pr view --json=title --jq '.title' | npx commitlint
-
       - name: test
         run: pwd
 
       - name: test2
         run: ls -la
+
+      - name: Lint current pull request title (test)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh pr view --json=title --jq '.title' | npx commitlint
+
