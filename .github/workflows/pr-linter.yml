@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  install-and-lint-pr-title:
+  install_and_lint_pr_title:
     runs-on: ubuntu-latest
     steps:
       - name: Install gh-cli and npm and conventional commit linter
