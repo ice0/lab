@@ -20,21 +20,14 @@ jobs:
       - name: Install conventional commits linter
         run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
-      - name: test
-        run: |
-          echo $MERGE_MESSAGE
-          echo $PR_TITLE
-          echo "==========================="
-          cat "$GITHUB_EVENT_PATH"
-
       - name: Configure commitlint
         run: |
           echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
 
       - name: Lint current pull request title
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          gh pr view $pr_number --json=title --jq '.title' | npx commitlint --verbose
+        run: jq --raw-output .pull_request.title "$GITHUB_EVENT_PATH" | npx commitlint --verbose
+#        env:
+#          GH_TOKEN: ${{ github.token }}
+#          pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+#          gh pr view $pr_number --json=title --jq '.title' | npx commitlint --verbose
 
