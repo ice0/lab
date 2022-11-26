@@ -15,11 +15,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install gh-cli and npm and conventional commit linter
-        run: sudo apt install npm gh -y
+#      - name: Install gh-cli and npm and conventional commit linter
+#        run: sudo apt install npm gh -y
 
-      - name: Install conventional commit linter
-        run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
+#      - name: Install conventional commit linter
+#        run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
       - uses: actions/checkout@v3
       - name: test
