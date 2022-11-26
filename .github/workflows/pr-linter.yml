@@ -5,6 +5,7 @@ name: Code quality
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   pull_request:
+    types: [opened, reopened, edited]
     branches: [ master ]
 
   # Allows you to run this workflow manually from the Actions tab
