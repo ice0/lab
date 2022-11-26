@@ -18,15 +18,14 @@ jobs:
 #      - name: Install gh-cli and npm and conventional commit linter
 #        run: sudo apt install npm gh -y
 
-#      - name: Install conventional commit linter
-#        run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
-
-      - uses: actions/checkout@v3
+      - name: Install conventional commit linter
+        run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
       - name: Configure commitlint
         run: |
           echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
 
+      - uses: actions/checkout@v3
       - name: Lint current pull request title (test)
         env:
           GH_TOKEN: ${{ github.token }}
