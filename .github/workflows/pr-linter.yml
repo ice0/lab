@@ -1,0 +1,20 @@
+name: PR title linter
+
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  install-and-lint-pr-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install gh-cli and npm and conventional commit linter
+      - run: sudo apt install npm gh -y
+      - run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
+
+      - name: Lint current pull request title
+      - run: gh pr view --json=title --jq '.title' | npx commitlint
