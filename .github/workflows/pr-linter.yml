@@ -31,5 +31,7 @@ jobs:
       - name: Lint current pull request title (test)
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh pr view --json=title --jq '.title' | npx commitlint
+        run: |
+          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          gh pr view $pull_number --json=title --jq '.title' | npx commitlint
 
