@@ -25,9 +25,10 @@ jobs:
           echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
 
       - name: Lint current pull request title
-        run: jq --raw-output .pull_request.title "$GITHUB_EVENT_PATH" | npx commitlint --verbose
+        run: jq --raw-output ".pull_request.title" "$GITHUB_EVENT_PATH" | npx commitlint --verbose
+
+# The code below is saved for future references.
 #        env:
 #          GH_TOKEN: ${{ github.token }}
 #          pr_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 #          gh pr view $pr_number --json=title --jq '.title' | npx commitlint --verbose
-
