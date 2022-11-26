@@ -9,12 +9,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  install_and_lint_pr_title:
+  Install and lint pull request title:
     runs-on: ubuntu-latest
     steps:
-      - name: Install gh-cli and npm and conventional commit linter
+#      - name: Install gh-cli and npm and conventional commit linter
       - run: sudo apt install npm gh -y
       - run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
-      - name: Lint current pull request title (test)
+#      - name: Lint current pull request title (test)
       - run: gh pr view --json=title --jq '.title' | npx commitlint
