@@ -16,5 +16,5 @@ jobs:
       - run: sudo apt install npm gh -y
       - run: npm install --save-dev @commitlint/config-conventional @commitlint/cli
 
-      - name: Lint current pull request title
+      - name: Lint current pull request title (test)
       - run: gh pr view --json=title --jq '.title' | npx commitlint
