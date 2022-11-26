@@ -1,4 +1,4 @@
-name: PR title linter
+name: Code quality
 
 # update
 
@@ -13,6 +13,7 @@ on:
 jobs:
   install-and-lint-pr-title:
     runs-on: ubuntu-latest
+    run-name: Conventional commits linter
 
     steps:
 #      - name: Install gh-cli and npm and conventional commit linter
@@ -32,5 +33,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-          gh pr view $pull_number --json=title --jq '.title' | npx commitlint
+          gh pr view $pull_number --json=title --jq '.title' | npx commitlint --verbose
 
