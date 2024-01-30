@@ -1,0 +1,109 @@
+# This is a basic workflow to help you get started with Actions
+
+name: cpp build CI
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.allow_failures }}
+    name: ${{ matrix.name }}
+    strategy:
+      matrix:
+        include:
+        # includes a new variable of npm with a value of 2
+        # for the matrix leg matching the os and version
+        - os: macos-12
+          name: macOS 12 Monterey (Autotools)
+          toolchain: autotools
+          allow_failures: false
+
+        - os: macos-12
+          name: macOS 12 Monterey (CMake+Ninja)
+          toolchain: cmake-ninja
+          allow_failures: true
+
+        - os: ubuntu-20.04
+          name: Ubuntu 20.04 Focal (Autotools)
+          allow_failures: false
+          toolchain: autotools
+
+        - os: ubuntu-22.04
+          name: Ubuntu 22.04 Jammy (CMake+Ninja)
+          toolchain: cmake-ninja
+          allow_failures: false
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - name: Download ccache archive
+        id: ccache-archive-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: .ccache
+          key: synfig-ccache-${{ matrix.os }}-${{ matrix.toolchain }}
+          restore-keys:
+            synfig-ccache-${{ matrix.os }}-${{ matrix.toolchain }}
+
+      - name: Install dependencies (Brew)
+        if: runner.os == 'macOS'
+        env:
+          HOMEBREW_NO_AUTO_UPDATE: 1
+          HOMEBREW_NO_ANALYTICS: 1
+        run: brew install g++
+
+      - name: Install dependencies (apt)
+        if: runner.os == 'Linux'
+        run: sudo apt-get install ccache ninja-build gdb systemd-coredump g++
+
+      - name: Setup ccache parameters and show statistics
+        run: |
+          ccache --set-config=compression=true
+          ccache --set-config=cache_dir=${GITHUB_WORKSPACE}/.ccache
+          ccache --show-stats
+          ccache -p
+
+      - name: Build (CMake+Ninja)
+        if: matrix.toolchain == 'cmake-ninja'
+        run: |
+          ulimit -c unlimited
+          mkdir build-cmake && cd build-cmake
+          cmake -GNinja -DENABLE_TESTS=ON -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_INSTALL_PREFIX=./install -DCMAKE_BUILD_TYPE=Release ../cpp
+          ninja
+          ctest --output-on-failure
+
+      - name: Build (Autotools+Make)
+        if: matrix.toolchain == 'autotools'
+        run: |
+          ulimit -c unlimited # enable core dumps
+          export PATH="/usr/lib/ccache/:${PATH}"
+          echo ${PATH}
+
+      - name: Collect core dump
+        if: runner.os == 'Linux' && failure()
+        run: sudo coredumpctl debug --debugger-arguments="-batch -ex 'thread apply all bt full'"
+
+      - name: ccache statistics
+        run: ccache --show-stats
+
+      - name: Save cache (only for master branch)
+        id: ccache-archive-save
+        if: github.ref_name == 'master'
+        uses: actions/cache/save@v4
+        with:
+          path: .ccache
+          key: synfig-ccache-${{ matrix.os }}-${{ matrix.toolchain }}
+
