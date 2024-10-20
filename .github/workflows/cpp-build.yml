@@ -29,8 +29,8 @@ jobs:
 #          toolchain: autotools
 #          allow_failures: false
 
-        - os: macos-12
-          name: macOS 12 Monterey (CMake+Ninja)
+        - os: macos-14
+          name: macOS 14 Sonoma (CMake+Ninja)
           toolchain: cmake-ninja
           allow_failures: true
 
@@ -88,6 +88,7 @@ jobs:
       - name: Build macOS (CMake+Ninja)
         if: runner.os == 'macOS' && matrix.toolchain == 'cmake-ninja'
         run: |
+          uname -m
           sudo chmod 1777 /cores
           sudo sysctl kern.coredump=1
           ulimit -c unlimited
